@@ -6,16 +6,28 @@ import "./App.css";
 const Header = (props) => {
   return <h1>{props.course}</h1>;
 };
+
 const Content = (props) => {
+  return (
+    <p>
+      <Part part={props.part} exercises={props.exercises} />
+    </p>
+  );
+};
+
+const Part = (props) => {
+  console.log(props);
   return (
     <p>
       {props.part} {props.exercises}
     </p>
   );
 };
+
 const Total = (props) => {
   return <p>Number of exercises {props.total} </p>;
 };
+
 const App = () => {
   const course = "Half Stack application development";
   const part1 = "Fundamentals of React";
