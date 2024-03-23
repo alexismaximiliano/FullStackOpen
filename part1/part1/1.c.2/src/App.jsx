@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+const Display = ({ counter }) => {
+  <div>{counter}</div>;
+};
+const Button = (onClick, text) => {
+  return <button onClick={onClick}>{text}</button>;
+};
+const App = () => {
+  const [counter, setCounter] = useState(0);
 
-function App() {
-  const [count, setCount] = useState(0)
+  console.log("rendering with counter value", counter);
+
+  const increaseByOne = () => {
+    console.log("increasing, value before", counter);
+    setCounter(counter + 1);
+  };
+
+  const decreaseByOne = () => {
+    console.log("decreasing, value before", counter);
+    setCounter(counter - 1);
+  };
+
+  const setToZero = () => {
+    console.log("resetting to zero, value before", counter);
+    setCounter(0);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <Display counter={counter} />
+      <Button onClick={increaseByOne} text="plus" />
+      <Button onClick={setToZero} text="zero" />
+      <Button onClick={decreaseByOne} text="minus" />
+    </div>
+  );
+};
 
-export default App
+export default App;
