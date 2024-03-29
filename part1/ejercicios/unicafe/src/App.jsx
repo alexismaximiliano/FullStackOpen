@@ -10,6 +10,25 @@ const Statistics = (props) => (
     {props.text} {props.value}
   </p>
 );
+const Feedback = ({ good, neutral, bad }) => {
+  const total = good + neutral + bad;
+  const prom = ((good + neutral - neutral - bad) / total).toFixed(2);
+  const positive = ((good / total) * 100).toFixed(2);
+  
+  if (total === 0) {
+    return <p>no feedback given</p>;
+  }
+  return (
+    <div>
+      <Statistics text={"good"} value={good} />
+      <Statistics text={"neutral"} value={neutral} />
+      <Statistics text={"bad"} value={bad} />
+      <Statistics text={"all"} value={total} />
+      <Statistics text={"average"} value={prom} />
+      <Statistics text={"positive"} value={positive} />
+    </div>
+  );
+};
 const App = () => {
   // guarda los clics de cada botón en su propio estado
   //variables
@@ -22,22 +41,17 @@ const App = () => {
     setGood(good + 1);
   };
   const handleNeutral = () => {
-    const updatedNeutral = neutral + 1;
-    setNeutral(updatedNeutral);
+    setNeutral(neutral+1);
   };
   const handleBad = () => {
-    const updatedBad = bad + 1;
-    setBad(updatedBad);
+    setBad(bad+1);
   };
   const handleZero = () => {
     setBad(0);
     setGood(0);
     setNeutral(0);
   };
-  
-  const total = good + neutral + bad;
-  const prom = (good + neutral - neutral - bad) / total;
-  const positive = (good / total) * 100;
+
   return (
     <div>
       <h1>feedback</h1>
@@ -47,13 +61,8 @@ const App = () => {
       <Button handleClick={handleBad} text="bad" />
 
       <h2>statistics</h2>
-      <Statistics text={"good"} value={good} />
-      <Statistics text={"neutral"} value={neutral} />
-      <Statistics text={"bad"} value={bad} />
-      <Statistics text={"all"} value={total} />
-      <Statistics text={"average"} value={prom} />
-      <Statistics text={"positive"} value={positive} />
-
+      <Feedback good={good} neutral={neutral} bad={bad} />
+      
       <Button handleClick={handleZero} text="zero" />
     </div>
   );
