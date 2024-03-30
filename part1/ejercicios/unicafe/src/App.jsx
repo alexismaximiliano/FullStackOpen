@@ -5,27 +5,32 @@ import "./App.css";
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>{text}</button>
 );
-const Statistics = (props) => (
-  <p>
-    {props.text} {props.value}
-  </p>
+const StatisticLine = (props) => (
+  <table>
+    <tbody>
+      <tr>
+        <th>{props.text}</th>
+        <td>{props.value}</td>
+      </tr>
+    </tbody>
+  </table>
 );
-const Feedback = ({ good, neutral, bad }) => {
+const Statistics = ({ good, neutral, bad }) => {
   const total = good + neutral + bad;
   const prom = ((good + neutral - neutral - bad) / total).toFixed(2);
   const positive = ((good / total) * 100).toFixed(2);
-  
+
   if (total === 0) {
     return <p>no feedback given</p>;
   }
   return (
     <div>
-      <Statistics text={"good"} value={good} />
-      <Statistics text={"neutral"} value={neutral} />
-      <Statistics text={"bad"} value={bad} />
-      <Statistics text={"all"} value={total} />
-      <Statistics text={"average"} value={prom} />
-      <Statistics text={"positive"} value={positive} />
+      <StatisticLine text={"good"} value={good} />
+      <StatisticLine text={"neutral"} value={neutral} />
+      <StatisticLine text={"bad"} value={bad} />
+      <StatisticLine text={"all"} value={total} />
+      <StatisticLine text={"average"} value={prom} />
+      <StatisticLine text={"positive"} value={positive} />
     </div>
   );
 };
@@ -41,10 +46,10 @@ const App = () => {
     setGood(good + 1);
   };
   const handleNeutral = () => {
-    setNeutral(neutral+1);
+    setNeutral(neutral + 1);
   };
   const handleBad = () => {
-    setBad(bad+1);
+    setBad(bad + 1);
   };
   const handleZero = () => {
     setBad(0);
@@ -61,8 +66,8 @@ const App = () => {
       <Button handleClick={handleBad} text="bad" />
 
       <h2>statistics</h2>
-      <Feedback good={good} neutral={neutral} bad={bad} />
-      
+      <Statistics good={good} neutral={neutral} bad={bad} />
+
       <Button handleClick={handleZero} text="zero" />
     </div>
   );
