@@ -17,15 +17,21 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+
   const next = () => {
     const random = Math.floor(Math.random() * anecdotes.length);
     setSelected(random);
   };
+
   const [votes, setVote] = useState(anecdotes.map(() => 0));
+  const [masVotado, setMasVotado] = useState(0);
+
   const votar = () => {
     const copy = [...votes];
     copy[selected] += 1;
     setVote(copy);
+
+    if (copy[selected] > votes[masVotado]) setMasVotado(selected);
   };
   return (
     <div>
@@ -39,9 +45,11 @@ const App = () => {
         <Button clickButton={next} text="next anecdote" />
       </div>
       <h2>Anecdote with most votes</h2>
-      <div></div>
+      <div>
+        {anecdotes[masVotado]}
+        <p>has {votes[masVotado]} votes </p>
+      </div>
     </div>
-    
   );
 };
 
