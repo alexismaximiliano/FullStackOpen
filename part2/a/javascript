@@ -1,0 +1,3 @@
+console.log("prop values is"+ props)//no ==> props value is [Object object]
+console.log("props value is",props)//si
+
