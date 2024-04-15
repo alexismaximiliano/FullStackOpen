@@ -1,4 +1,4 @@
-const Total = (props) => {
-    return <p>Number of exercises {props.total} </p>;
+const Total = ({total}) => {
+    return <p>Number of exercises {total} </p>;
   };
   export default Total;
