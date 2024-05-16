@@ -1,62 +1,73 @@
-/* eslint-disable react/prop-types */
 import { useState } from "react";
-// import Lista from "./components/Lista";
+import Persona from "./components/Persona";
 
 const App = () => {
-  const [persons, setPersons] = useState([]);
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", number: "040-123456", id: 1 },
+    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
+    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
+    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
+  ]);
   const [newName, setNewName] = useState("");
-  const [newNumber, setNewNumber] = useState("");
+  const [newNumber,setNewNumber] = useState("");
+  const [showAll, setShowAll] = useState(true);
 
   const addPerson = (event) => {
     event.preventDefault();
-    if (persons.includes(newName)) {
-      window.alert(`${newName} is already added to phonebook`);
-      setNewName("");
-    } else {
-      const personsObject = {
-        id:persons.length,
-        name: newName,
-        Number: newNumber,
-      };
-      setPersons(persons.concat(personsObject));
-      setNewName("");
-      setNewNumber("");
-      console.log(persons);
+    const personObject = {
+      name: newName,
+      number: newNumber,
+      id: persons.length + 1,
+    };
+    function obtenerNombres(array){
+      return array.map(persons=>persons.name)
     }
+    let nombres=obtenerNombres(persons)
+  
+    
+     if (nombres.includes(newName)) {
+      window.alert(`${newName} is already added to phonebook`)
+     }
+     else{
+       setPersons(persons.concat(personObject));
+       setNewName("");
+       setNewNumber("")
+     }
   };
-  const nuevoNombre = (event) => {
+  const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
-  const nuevoNumero = (event) => {
-    setNewNumber(event.target.value);
-  };
+  const handleNumberChange = (event)=>{
+    setNewNumber(event.target.value)
+  }
+  const personToShow = showAll
+    ? persons
+    : persons.filter((persona) => persona.important === true);
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        <button onClick={() => setShowAll(!showAll)}>
+          show {showAll ? "important" : "all"}
+        </button>
+      </div>
       <form onSubmit={addPerson}>
         <div>
-          name: <input value={newName} onChange={nuevoNombre} />
+          name: <input value={newName} onChange={handleNameChange} />
         </div>
-        <div>
-          Number:
-          <input type="number" value={newNumber} onChange={nuevoNumero} />{" "}
-        </div>
+        <div>number: <input type="number" value={newNumber} onChange={handleNumberChange} /></div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      {/* <ul>
-        {persons.map((persons) => (
-          <Lista key={persons.id} name={persons} numero={persons} />
+      <ul>
+        {personToShow.map((persona) => (
+          <Persona key={persona.id} persona={persona} />
         ))}
-      </ul> */}
-      <ul>{persons.map(person=>(
-        <li key={person.id}>{person.name}: {person.Number} </li>
-      ) )} </ul>
-      <div>
-        debug: {newName} {newNumber}{" "}
-      </div>
+      </ul>
+      <div>debug: {newName}{newNumber}</div>
     </div>
   );
 };
