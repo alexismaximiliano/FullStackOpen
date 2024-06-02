@@ -1,0 +1,24 @@
+    crear vite
+npm create vite@latest XX -- --template react
+cd XX
+npm install
+npm run dev
+---------------------------------------------------
+    crear db(json)
+npm install -g json-server
+json-server --port 3001 --watch db.json
+
+*si no funciona
+npx json-server --port 3001 --watch db.json
+
+npm install json-server --save-dev
+    *agregar a script en package.json
+          "server": "json-server -p3001 --watch db.json"
+npm run server
+
+        *******
+        npm install axios
+        npm install json-server --save-dev
+        *******
+
+AXION Y PROMESAS
